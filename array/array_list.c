@@ -54,7 +54,12 @@ void arraylistInsert(ArrayList *list, int index, void *obj)
     // bigger size
     _arr_enlarge(list);
 
-    memcpy(list->content + index + 1, list->content + index, list->length - index);
+    // shift data right
+    void **content = list->content;
+    for (int i = list->length; i > index; i--)
+    {
+        content[i] = content[i - 1];
+    }
     list->content[index] = obj;
     list->length++;
 }
